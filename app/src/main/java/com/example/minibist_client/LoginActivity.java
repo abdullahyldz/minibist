@@ -147,7 +147,7 @@ public class LoginActivity extends Activity {
                 Intent loginSuccess = new Intent(LoginActivity.this, StockActivity.class);
                 LoginActivity.this.startActivity(loginSuccess);
             } else {
-                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, this.serverResponse.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 
