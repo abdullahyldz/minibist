@@ -37,8 +37,6 @@ public class StockActivity extends AppCompatActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(edtTextAmount.getText());
-                System.out.println(edtTextPrice.getText());
                 Toast.makeText(getApplicationContext(), "Buy order\n" +
                         "Amount: " + edtTextAmount.getText() + "\n" +
                         "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();

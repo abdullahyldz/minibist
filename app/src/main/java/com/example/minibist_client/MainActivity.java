@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.minibist_client.connection.SocketHandler;
 import com.example.minibist_client.model.Task;
 import com.example.minibist_client.serializer.LoginContent;
 import com.example.minibist_client.serializer.LoginSerializer;
@@ -45,7 +44,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SignupActivity.class));
-            } 
+            }
         });
         /*
         * String str = text.getText().toString();

@@ -17,8 +17,8 @@
     <EditText
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
-        android:id = "@+id/editText"
-        android:hint = "Enter Name"
+        android:id = "@+id/emailBox"
+        android:hint = "Email"
         android:focusable = "true"
         android:textColorHighlight = "#ff7eff15"
         android:textColorHint = "#ad1d63"
@@ -34,32 +34,34 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/passwordBox"
+        android:layout_below="@+id/emailBox"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText"
-        android:layout_alignEnd="@+id/editText"
+        android:layout_alignRight="@+id/emailBox"
+        android:layout_alignEnd="@+id/emailBox"
         android:textColorHighlight = "#ff7eff15"
         android:textColorHint = "#ad1d63"
         android:hint="Password" />
 
     <Button
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login"
-        android:id="@+id/button"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="384dp"
+        android:layout_toStartOf="@+id/textview"
         android:layout_toLeftOf="@+id/textview"
-        android:layout_toStartOf="@+id/textview" />
+        android:text="login" />
 
     <Button
+        android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/button2"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="384dp"
+        android:layout_toEndOf="@+id/textview"
         android:layout_toRightOf="@+id/textview"
-        android:layout_toEndOf="@+id/textview" />
+        android:text="Cancel" />
 
 </RelativeLayout>

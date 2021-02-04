@@ -75,9 +75,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="5"
-
                 app:layout_anchor="@+id/linearLayout"
                 app:layout_anchorGravity="center" />
+
 
         </LinearLayout>
 
@@ -133,5 +133,7 @@
 
         </LinearLayout>
     </LinearLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
