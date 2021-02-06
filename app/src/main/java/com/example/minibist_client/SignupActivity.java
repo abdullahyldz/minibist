@@ -123,11 +123,6 @@ public class SignupActivity extends AppCompatActivity {
 
             SocketHandler handler = new SocketHandler(message.toString());
             handler.execute();
-
-            Toast.makeText(this,"Signup Successful",Toast.LENGTH_SHORT).show();
-            // Here you can call you API
-            Intent signupSuccess = new Intent(this, LoginActivity.class);
-            startActivity(signupSuccess);
         }
     }
 
