@@ -32,6 +32,7 @@ public class StockActivity extends AppCompatActivity {
     Button btnBuy, btnSell;
     EditText edtTextPrice, edtTextAmount;
     Spinner stockSpinner;
+    final String[] stockNames = { "EREGL", "GARAN", "THYAO", "ARCLK", "TOASO" };
 
     @Override
     protected void onResume() {
@@ -58,9 +59,8 @@ public class StockActivity extends AppCompatActivity {
 
         stockSpinner = findViewById(R.id.stockSpinner);
 
-        String[] stockNames = { "EREGL", "GARAN", "THYAO", "ARCLK", "TOASO" };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stockNames);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         stockSpinner.setAdapter(adapter);
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
