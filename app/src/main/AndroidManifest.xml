@@ -19,18 +19,16 @@
 
         <activity android:name="com.example.minibist_client.SignupActivity"></activity>
         <activity android:name="com.example.minibist_client.LoginActivity" />
-        <activity android:name="com.example.minibist_client.StockActivity">
+        <activity android:name="com.example.minibist_client.StockActivity"></activity>
+        <activity
+            android:name="com.example.minibist_client.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.minibist_client.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
     </application>
 

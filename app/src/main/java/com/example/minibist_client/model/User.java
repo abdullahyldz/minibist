@@ -17,4 +17,13 @@ public class User {
     public void setOwnedStocks(HashMap<String, Integer> ownedStocks) {
         this.ownedStocks = ownedStocks;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "fullname='" + fullname + '\'' +
+                ", email='" + email + '\'' +
+                ", ownedStocks=" + ownedStocks +
+                '}';
+    }
 }

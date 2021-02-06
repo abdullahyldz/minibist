@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +27,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class LoginActivity extends Activity {
-    Button b1,b2;
-    EditText ed1,ed2;
+    Button loginButton, cancelButton;
+    EditText etEmail, etPassword;
+    final int MIN_PASSWORD_LENGTH = 6;
 
     int counter = 3;
     @Override
@@ -35,32 +37,33 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ed1 = (EditText)findViewById(R.id.emailBox);
-        ed2 = (EditText)findViewById(R.id.passwordBox);
+        etEmail = (EditText)findViewById(R.id.emailBox);
+        etPassword = (EditText)findViewById(R.id.passwordBox);
 
-        b1 = (Button)findViewById(R.id.loginButton);
-        b2 = (Button)findViewById(R.id.cancelButton);
+        loginButton = (Button)findViewById(R.id.loginButton);
+        cancelButton = (Button)findViewById(R.id.cancelButton);
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject content = new JSONObject();
-                JSONObject message = new JSONObject();
-                try {
-                    content.put("email", ed1.getText().toString());
-                    content.put("password", ed2.getText().toString());
-                    message.put("operation", "login");
-                    message.put("message", content.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(validateInput()){
+                    JSONObject content = new JSONObject();
+                    JSONObject message = new JSONObject();
+                    try {
+                        content.put("email", etEmail.getText().toString());
+                        content.put("password", etPassword.getText().toString());
+                        message.put("operation", "login");
+                        message.put("message", content.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    SocketHandler handler = new SocketHandler(message.toString());
+                    handler.execute();
                 }
-
-                SocketHandler handler = new SocketHandler(message.toString());
-                handler.execute();
             }
         });
 
-        b2.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -137,7 +140,7 @@ public class LoginActivity extends Activity {
             if (this.serverResponse.getStatus().equals("success")) {
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 AppContext.user = new User("Abdullah Yıldız", "email", null);
-
+                System.out.println(AppContext.user);
                 Intent loginSuccess = new Intent(LoginActivity.this, StockActivity.class);
                 LoginActivity.this.startActivity(loginSuccess);
             } else {
@@ -149,4 +152,33 @@ public class LoginActivity extends Activity {
             return serverResponse;
         }
     }
+
+    // Checking if the input in form is valid
+    boolean validateInput() {
+
+        if (etEmail.getText().toString().equals("")) {
+            etEmail.setError("Please Enter Email");
+            return false;
+        }
+        if (etPassword.getText().toString().equals("")) {
+            etPassword.setError("Please Enter Password");
+            return false;
+        }
+        // checking the proper email format
+        if (!isEmailValid(etEmail.getText().toString())) {
+            etEmail.setError("Please Enter Valid Email");
+            return false;
+        }
+        // checking minimum password Length
+        if (etPassword.getText().length() < MIN_PASSWORD_LENGTH) {
+            etPassword.setError("Password Length must be more than " + MIN_PASSWORD_LENGTH + "characters");
+            return false;
+        }
+        return true;
+    }
+
+    boolean isEmailValid(String email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
 }

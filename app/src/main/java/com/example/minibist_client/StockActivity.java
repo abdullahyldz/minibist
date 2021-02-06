@@ -28,6 +28,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class StockActivity extends AppCompatActivity {
+
+    Button btnBuy, btnSell;
+    EditText edtTextPrice, edtTextAmount;
+    Spinner stockSpinner;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -43,9 +48,7 @@ public class StockActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
 
-        Button btnBuy, btnSell;
-        EditText edtTextPrice, edtTextAmount;
-        Spinner stockSpinner;
+
 
         edtTextAmount = findViewById(R.id.editTextAmountValue);
         edtTextPrice = findViewById(R.id.editTextPriceValue);
@@ -63,23 +66,25 @@ public class StockActivity extends AppCompatActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Buy order\n" +
-                        "Amount: " + edtTextAmount.getText() + "\n" +
-                        "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
-                JSONObject content = new JSONObject();
-                JSONObject message = new JSONObject();
-                try {
-                    content.put("amount", edtTextAmount.getText().toString());
-                    content.put("price", edtTextPrice.getText().toString());
-                    content.put("stockName", stockSpinner.getSelectedItem().toString());
-                    message.put("operation", "buy");
-                    message.put("message", content.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                if(validateInput()) {
+                    Toast.makeText(getApplicationContext(), "Buy order\n" +
+                            "Amount: " + edtTextAmount.getText() + "\n" +
+                            "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
+                    JSONObject content = new JSONObject();
+                    JSONObject message = new JSONObject();
+                    try {
+                        content.put("amount", edtTextAmount.getText().toString());
+                        content.put("price", edtTextPrice.getText().toString());
+                        content.put("stockName", stockSpinner.getSelectedItem().toString());
+                        message.put("operation", "buy");
+                        message.put("message", content.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                SocketHandler handler = new SocketHandler(message.toString());
-                handler.execute();
+                    SocketHandler handler = new SocketHandler(message.toString());
+                    handler.execute();
+                }
             }
         });
 
@@ -88,24 +93,26 @@ public class StockActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Sell order\n" +
-                        "Amount: " + edtTextAmount.getText() + "\n" +
-                        "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
+                if(validateInput()){
+                    Toast.makeText(getApplicationContext(), "Sell order\n" +
+                            "Amount: " + edtTextAmount.getText() + "\n" +
+                            "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
 
-                JSONObject content = new JSONObject();
-                JSONObject message = new JSONObject();
-                try {
-                    content.put("amount", edtTextAmount.getText().toString());
-                    content.put("price", edtTextPrice.getText().toString());
-                    content.put("stockName", stockSpinner.getSelectedItem().toString());
-                    message.put("operation", "sell");
-                    message.put("message", content.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    JSONObject content = new JSONObject();
+                    JSONObject message = new JSONObject();
+                    try {
+                        content.put("amount", edtTextAmount.getText().toString());
+                        content.put("price", edtTextPrice.getText().toString());
+                        content.put("stockName", stockSpinner.getSelectedItem().toString());
+                        message.put("operation", "sell");
+                        message.put("message", content.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    SocketHandler handler = new SocketHandler(message.toString());
+                    handler.execute();
                 }
-
-                SocketHandler handler = new SocketHandler(message.toString());
-                handler.execute();
             }
         });
     }
@@ -186,5 +193,17 @@ public class StockActivity extends AppCompatActivity {
         public ServerResponse getServerResponse() {
             return serverResponse;
         }
+    }
+    boolean validateInput() {
+
+        if (edtTextAmount.getText().toString().equals("")) {
+            edtTextAmount.setError("Please Enter Integer Amount");
+            return false;
+        }
+        if (edtTextPrice.getText().toString().equals("")) {
+            edtTextPrice.setError("Please Enter Integer Amount");
+            return false;
+        }
+        return true;
     }
 }
