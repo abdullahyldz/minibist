@@ -5,8 +5,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,12 +45,20 @@ public class StockActivity extends AppCompatActivity {
 
         Button btnBuy, btnSell;
         EditText edtTextPrice, edtTextAmount;
+        Spinner stockSpinner;
 
         edtTextAmount = findViewById(R.id.editTextAmountValue);
         edtTextPrice = findViewById(R.id.editTextPriceValue);
 
         btnBuy = findViewById(R.id.buyButton);
         btnSell = findViewById(R.id.sellButton);
+
+        stockSpinner = findViewById(R.id.stockSpinner);
+
+        String[] stockNames = { "EREGL", "GARAN", "THYAO", "ARCLK", "TOASO" };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stockNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stockSpinner.setAdapter(adapter);
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +71,7 @@ public class StockActivity extends AppCompatActivity {
                 try {
                     content.put("amount", edtTextAmount.getText().toString());
                     content.put("price", edtTextPrice.getText().toString());
+                    content.put("stockName", stockSpinner.getSelectedItem().toString());
                     message.put("operation", "buy");
                     message.put("message", content.toString());
                 } catch (JSONException e) {
@@ -86,6 +97,7 @@ public class StockActivity extends AppCompatActivity {
                 try {
                     content.put("amount", edtTextAmount.getText().toString());
                     content.put("price", edtTextPrice.getText().toString());
+                    content.put("stockName", stockSpinner.getSelectedItem().toString());
                     message.put("operation", "sell");
                     message.put("message", content.toString());
                 } catch (JSONException e) {
