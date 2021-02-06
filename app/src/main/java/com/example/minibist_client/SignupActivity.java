@@ -121,7 +121,7 @@ public class SignupActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            SignupActivity.SocketHandler handler = new SignupActivity.SocketHandler(message.toString());
+            SocketHandler handler = new SocketHandler(message.toString());
             handler.execute();
 
             Toast.makeText(this,"Signup Successful",Toast.LENGTH_SHORT).show();
