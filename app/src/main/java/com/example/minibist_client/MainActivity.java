@@ -41,15 +41,5 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, SignupActivity.class));
             }
         });
-        /*
-        * String str = text.getText().toString();
-                Gson gson = new Gson();
-                LoginContent loginContent = new LoginContent("email@gmail.com", "passwordEmail");
-                LoginSerializer loginSerializer = new LoginSerializer(gson.toJson(loginContent));
-                String s = gson.toJson(loginSerializer);
-                Task t = gson.fromJson(s, Task.class);
-                new SocketHandler(gson.toJson(loginSerializer)).execute();
-        * */
-
     }
 }

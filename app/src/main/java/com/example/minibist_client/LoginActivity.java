@@ -44,27 +44,19 @@ public class LoginActivity extends Activity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ed1.getText().toString().equals("admin") &&
-                        ed2.getText().toString().equals("admin")) {
-
-                    JSONObject content = new JSONObject();
-                    JSONObject message = new JSONObject();
-                    try {
-                        content.put("email", ed1.getText().toString());
-                        content.put("password", ed2.getText().toString());
-                        message.put("operation", "login");
-                        message.put("message", content.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    SocketHandler handler = new SocketHandler(message.toString());
-                    handler.execute();
-
-                    Toast.makeText(getApplicationContext(), "Please wait...",Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(getApplicationContext(), "A problem occurred. Please try again.",Toast.LENGTH_SHORT).show();
+                JSONObject content = new JSONObject();
+                JSONObject message = new JSONObject();
+                try {
+                    content.put("email", ed1.getText().toString());
+                    content.put("password", ed2.getText().toString());
+                    message.put("operation", "login");
+                    message.put("message", content.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+                SocketHandler handler = new SocketHandler(message.toString());
+                handler.execute();
             }
         });
 
