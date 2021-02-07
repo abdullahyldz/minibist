@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class AppContext {
 
-    public static User user;
+    public static String email;
 }

@@ -139,8 +139,7 @@ public class LoginActivity extends Activity {
 
             if (this.serverResponse.getStatus().equals("success")) {
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                AppContext.user = new User("Abdullah Yıldız", "email", null);
-                System.out.println(AppContext.user);
+                AppContext.email = etEmail.getText().toString();
                 Intent loginSuccess = new Intent(LoginActivity.this, StockActivity.class);
                 LoginActivity.this.startActivity(loginSuccess);
             } else {

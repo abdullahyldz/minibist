@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.minibist_client.context.AppContext;
 import com.example.minibist_client.model.ServerResponse;
 import com.google.gson.Gson;
 
@@ -75,6 +76,7 @@ public class StockActivity extends AppCompatActivity {
                     try {
                         content.put("amount", edtTextAmount.getText().toString());
                         content.put("price", edtTextPrice.getText().toString());
+                        content.put("email", AppContext.email);
                         content.put("stockName", stockSpinner.getSelectedItem().toString());
                         message.put("operation", "buy");
                         message.put("message", content.toString());
@@ -184,7 +186,7 @@ public class StockActivity extends AppCompatActivity {
             }
 
             if (this.serverResponse.getStatus().equals("success")) {
-                Toast.makeText(StockActivity.this, "Successfully sent your order!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StockActivity.this, "Successfully completed order!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(StockActivity.this, this.serverResponse.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -202,6 +204,14 @@ public class StockActivity extends AppCompatActivity {
         }
         if (edtTextPrice.getText().toString().equals("")) {
             edtTextPrice.setError("Please Enter Integer Amount");
+            return false;
+        }
+        if(Integer.parseInt(edtTextPrice.getText().toString()) <= 0) {
+            edtTextPrice.setError("Please Enter Positive Price");
+            return false;
+        }
+        if(Integer.parseInt(edtTextAmount.getText().toString()) <= 0 ) {
+            edtTextAmount.setError("Please Enter Positive Amount");
             return false;
         }
         return true;
