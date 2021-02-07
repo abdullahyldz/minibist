@@ -68,9 +68,9 @@ public class StockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validateInput()) {
-                    Toast.makeText(getApplicationContext(), "Buy order\n" +
-                            "Amount: " + edtTextAmount.getText() + "\n" +
-                            "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Buy order\n" +
+//                            "Amount: " + edtTextAmount.getText() + "\n" +
+//                            "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
                     JSONObject content = new JSONObject();
                     JSONObject message = new JSONObject();
                     try {
@@ -96,15 +96,16 @@ public class StockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validateInput()){
-                    Toast.makeText(getApplicationContext(), "Sell order\n" +
-                            "Amount: " + edtTextAmount.getText() + "\n" +
-                            "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Sell order\n" +
+//                            "Amount: " + edtTextAmount.getText() + "\n" +
+//                            "Price: "+ edtTextPrice.getText(), Toast.LENGTH_SHORT).show();
 
                     JSONObject content = new JSONObject();
                     JSONObject message = new JSONObject();
                     try {
                         content.put("amount", edtTextAmount.getText().toString());
                         content.put("price", edtTextPrice.getText().toString());
+                        content.put("email", AppContext.email);
                         content.put("stockName", stockSpinner.getSelectedItem().toString());
                         message.put("operation", "sell");
                         message.put("message", content.toString());
