@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.minibist_client.context.AppContext;
+import com.example.minibist_client.model.ProfileActivity;
 import com.example.minibist_client.model.ServerResponse;
 import com.google.gson.Gson;
 
@@ -40,6 +41,22 @@ public class StockActivity extends AppCompatActivity {
         super.onResume();
     }
 
+//    protected void onBackpress(){
+////        Intent intent = new Intent(StockActivity.this, StockActivity.class);
+////        intent.putExtra("FLAG", 0);
+////        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+////        startActivity(intent);
+//
+//    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(StockActivity.this, ProfileActivity.class);
+        intent.putExtra("FLAG", 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
