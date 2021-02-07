@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.minibist_client.context.AppContext;
+import com.example.minibist_client.model.ProfileActivity;
 import com.example.minibist_client.model.ServerResponse;
 import com.example.minibist_client.model.User;
 import com.google.gson.Gson;
@@ -140,7 +141,7 @@ public class LoginActivity extends Activity {
             if (this.serverResponse.getStatus().equals("success")) {
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 AppContext.email = etEmail.getText().toString();
-                Intent loginSuccess = new Intent(LoginActivity.this, StockActivity.class);
+                Intent loginSuccess = new Intent(LoginActivity.this, ProfileActivity.class);
                 LoginActivity.this.startActivity(loginSuccess);
             } else {
                 Toast.makeText(LoginActivity.this, this.serverResponse.getMessage(), Toast.LENGTH_LONG).show();
