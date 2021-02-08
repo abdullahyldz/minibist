@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.minibist_client.context.AppContext;
 import com.example.minibist_client.model.ServerResponse;
 import com.google.gson.Gson;
 
@@ -142,8 +143,8 @@ public class SignupActivity extends AppCompatActivity {
         @Override
         protected JSONObject doInBackground(Void... voids) {
             try {
-                InetAddress serverAddr = InetAddress.getByName("10.0.2.2");
-                socket = new Socket(serverAddr, 6666);
+                InetAddress serverAddr = InetAddress.getByName(AppContext.ip);
+                socket = new Socket(serverAddr, AppContext.port);
                 writer = new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream()));
                 reader = new BufferedReader(

@@ -88,8 +88,9 @@ public class LoginActivity extends Activity {
         @Override
         protected JSONObject doInBackground(Void... voids) {
             try {
-                InetAddress serverAddr = InetAddress.getByName("10.0.2.2");
-                socket = new Socket(serverAddr, 6666);
+
+                InetAddress serverAddr = InetAddress.getByName(AppContext.ip);
+                socket = new Socket(serverAddr, AppContext.port);
                 writer = new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream()));
                 reader = new BufferedReader(
@@ -137,15 +138,18 @@ public class LoginActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-
-            if (this.serverResponse.getStatus().equals("success")) {
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                AppContext.email = etEmail.getText().toString();
-                Intent loginSuccess = new Intent(LoginActivity.this, ProfileActivity.class);
-                LoginActivity.this.startActivity(loginSuccess);
-            } else {
-                Toast.makeText(LoginActivity.this, this.serverResponse.getMessage(), Toast.LENGTH_LONG).show();
+            if(this.serverResponse!=null) {
+                if ( this.serverResponse.getStatus().equals("success")) {
+                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                    AppContext.email = etEmail.getText().toString();
+                    Intent loginSuccess = new Intent(LoginActivity.this, ProfileActivity.class);
+                    LoginActivity.this.startActivity(loginSuccess);
+                    AppContext.email = etEmail.getText().toString();
+                } else {
+                    Toast.makeText(LoginActivity.this, this.serverResponse.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
+
         }
 
         public ServerResponse getServerResponse() {
