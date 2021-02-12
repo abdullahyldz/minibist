@@ -1,4 +1,4 @@
-package com.example.minibist_client.model;
+package com.example.minibist_client;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,21 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.example.minibist_client.R;
-import com.example.minibist_client.StockActivity;
 import com.example.minibist_client.context.AppContext;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ProfileActivity extends AppCompatActivity {
     Button btnStartStockActivity;
+    public static EditText moneyAmount ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         btnStartStockActivity = findViewById(R.id.startStockActivityButton);
+        moneyAmount = findViewById(R.id.moneyAmount);
+        moneyAmount.setText("Money : " + Integer.toString(AppContext.money) + "₺");
 
         btnStartStockActivity.setOnClickListener(new View.OnClickListener() {
             @Override

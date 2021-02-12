@@ -3,8 +3,8 @@ package com.example.minibist_client;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.minibist_client.context.AppContext;
-import com.example.minibist_client.model.ProfileActivity;
 import com.example.minibist_client.model.ServerResponse;
 import com.google.gson.Gson;
 
@@ -28,27 +27,29 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class StockActivity extends AppCompatActivity {
 
     Button btnBuy, btnSell;
-    EditText edtTextPrice, edtTextAmount;
+    EditText edtTextPrice, edtTextAmount, edtStockPrice;
     Spinner stockSpinner;
     final String[] stockNames = { "EREGL", "GARAN", "THYAO", "ARCLK", "TOASO" };
+    public static final HashMap<String, Integer> stockPrices = new HashMap<String, Integer>(){
+        {
+            put("TOASO", 36);
+            put("GARAN", 10);
+            put("THYAO", 12);
+            put("ARCLK", 34);
+            put("EREGL", 14);
+        }
+    };
 
     @Override
     protected void onResume() {
         super.onResume();
     }
 
-//    protected void onBackpress(){
-////        Intent intent = new Intent(StockActivity.this, StockActivity.class);
-////        intent.putExtra("FLAG", 0);
-////        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-////        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-////        startActivity(intent);
-//
-//    }
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(StockActivity.this, ProfileActivity.class);
@@ -71,6 +72,7 @@ public class StockActivity extends AppCompatActivity {
 
         edtTextAmount = findViewById(R.id.editTextAmountValue);
         edtTextPrice = findViewById(R.id.editTextPriceValue);
+        edtStockPrice = findViewById(R.id.stockPrice);
 
         btnBuy = findViewById(R.id.buyButton);
         btnSell = findViewById(R.id.sellButton);
@@ -80,6 +82,20 @@ public class StockActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stockNames);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         stockSpinner.setAdapter(adapter);
+
+        stockSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+                edtStockPrice.setText(Integer.toString(stockPrices.get(stockSpinner.getSelectedItem().toString())) + " ₺");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +117,7 @@ public class StockActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    SocketHandler handler = new SocketHandler(message.toString());
+                    SocketHandler handler = new SocketHandler(message.toString(), true, edtTextPrice.getText().toString(), edtTextAmount.getText().toString());
                     handler.execute();
                 }
             }
@@ -130,7 +146,7 @@ public class StockActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    SocketHandler handler = new SocketHandler(message.toString());
+                    SocketHandler handler = new SocketHandler(message.toString(), false, edtTextPrice.getText().toString(), edtTextAmount.getText().toString());
                     handler.execute();
                 }
             }
@@ -143,11 +159,18 @@ public class StockActivity extends AppCompatActivity {
         BufferedWriter writer;
         private String message;
         Gson gson;
+        Boolean isBuy;
+        Integer price;
+        Integer amount;
+
         private ServerResponse serverResponse = null;
 
-        public SocketHandler(String message){
+        public SocketHandler(String message, Boolean isBuy, String price, String amount){
             this.message = message;
             this.gson = new Gson();
+            this.isBuy = isBuy;
+            this.price = Integer.parseInt(price);
+            this.amount = Integer.parseInt(amount);
         }
 
         @Override
@@ -205,6 +228,12 @@ public class StockActivity extends AppCompatActivity {
 
             if (this.serverResponse.getStatus().equals("success")) {
                 Toast.makeText(StockActivity.this, "Successfully completed order!", Toast.LENGTH_SHORT).show();
+                if(this.isBuy) {
+                    AppContext.money -= this.price * this.amount;
+                } else {
+                    AppContext.money += this.price * this.amount;
+                }
+                ProfileActivity.moneyAmount.setText("Money : " + Integer.toString(AppContext.money) + "₺");
             } else {
                 Toast.makeText(StockActivity.this, this.serverResponse.getMessage(), Toast.LENGTH_LONG).show();
             }

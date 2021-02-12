@@ -80,6 +80,16 @@
                 android:gravity="center"
                 android:textSize = "64dp" />
 
+            <EditText
+                android:id="@+id/stockPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:inputType="number" />
+
         </LinearLayout>
 
         <LinearLayout

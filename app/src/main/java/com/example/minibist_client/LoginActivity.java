@@ -11,9 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.minibist_client.context.AppContext;
-import com.example.minibist_client.model.ProfileActivity;
 import com.example.minibist_client.model.ServerResponse;
-import com.example.minibist_client.model.User;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
