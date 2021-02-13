@@ -10,3 +10,19 @@ Server of this application can be found at [minibist-server](https://github.com/
 * Profile page to display current money
 * StockActivity screen to send Sell and Buy operation messages
 * Directions between activities with respect to the success messages from server.
+
+## How to run the app in phone?
+
+* Open up Android Studio
+* Click ```Build Bundle(s) and APK(s)```
+* Choose ```Build APKs```
+
+* Gradle will build the App and generate the .apk file. 
+* After .apk is generated, it can be located in ```minibistclient\app\build\outputs\apk\debug```
+
+## How to run the app in emulator?
+
+* Open up Android Studio
+* Choose ```app``` in the Run/Debug configuration section
+* Choose emulator to run the app
+* Run
